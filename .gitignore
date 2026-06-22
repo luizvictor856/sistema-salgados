@@ -1,0 +1,16 @@
+# Gradle
+.gradle/
+build/
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Arquivos temporários
+erro.txt
+
+# Sistema
+.DS_Store
+Thumbs.db
