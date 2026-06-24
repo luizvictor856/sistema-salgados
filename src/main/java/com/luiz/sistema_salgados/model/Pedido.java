@@ -82,4 +82,4 @@ public class Pedido {
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
     }
-}
+}           
