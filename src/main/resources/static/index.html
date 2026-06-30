@@ -1,13 +1,197 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Salgados</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <h1>Sistema de Salgados</h1>
+    <div class="sidebar">
+        <h1>
+            🍔 Sistema de
+            <br>
+            <span>Salgados</span>
+        </h1>
 
-    <p>Projeto desenvolvido por Luiz Victor</p>
+        <ul>
+            <li>🏠 Dashboard</li>
+            <li>📦 Produtos</li>
+            <li>🛒 Pedidos</li>
+            <li>🔄 Movimentações</li>
+            <li>📊 Relatórios</li>
+        </ul>
+    </div>
+
+    <div class="conteudo">
+
+        <header>
+            <div class="topo">
+                <h2>Sistema de Salgados</h2>
+
+                <div class="usuario">
+                    👤 Administrador
+                </div>
+            </div>
+        </header>
+
+        <section class="card">
+            <h2>Cadastrar Produto</h2>
+
+            <div class="formulario">
+                <input type="text" id="sabor" placeholder="Ex.: Coxinha">
+                <input type="number" id="preco" placeholder="Preço">
+                <input type="number" id="estoque" placeholder="Estoque">
+
+                <button onclick="cadastrarProduto()">
+                    Salvar Produto
+                </button>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>Cadastrar Cliente</h2>
+
+             <div class="formulario">
+                <input type="text" id="nomeCliente" placeholder="Nome do Cliente">
+                <input type="email" id="emailCliente" placeholder="E-mail">
+                <input type="password" id="senhaCliente" placeholder="Senha">
+
+                <button onclick="cadastrarCliente()">
+                    Salvar Cliente
+                </button>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="tituloTabela">
+                <h2>Clientes Cadastrados</h2>
+
+                <button onclick="listarClientes()">
+                    Atualizar
+                </button>
+            </div>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                </tr>
+            </thead>
+
+                <tbody id="listaClientes"></tbody>
+            </table>
+        </section>
+
+        <section class="card">
+            <div class="tituloTabela">
+                <h2>Produtos Cadastrados</h2>
+
+                <button onclick="listarProdutos()">
+                    Atualizar
+                </button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Sabor</th>
+                        <th>Preço</th>
+                        <th>Estoque</th>
+                    </tr>
+                </thead>
+
+                <tbody id="listaProdutos"></tbody>
+            </table>
+        </section>
+
+        </section>   <!-- Fim de Produtos Cadastrados -->
+
+
+    <section class="card">
+        <h2>Entrada de Estoque</h2>
+
+        <div class="formulario">
+            <input type="number" id="produtoEntradaId" placeholder="ID do Produto">
+            <input type="number" id="quantidadeEntrada" placeholder="Quantidade">
+
+            <button onclick="entradaEstoque()">
+                Adicionar Estoque
+            </button>
+        </div>
+    </section>
+
+    <section class="card">   
+
+        <section class="card">
+            <h2>Fazer Pedido</h2>
+
+            <div class="formulario">
+                <input type="number" id="produtoId" placeholder="ID do Produto">
+                <input type="number" id="quantidadePedido" placeholder="Quantidade">
+
+                <button onclick="fazerPedido()">
+                    Fazer Pedido
+                </button>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="tituloTabela">
+                <h2>Pedidos Realizados</h2>
+
+                <button onclick="listarPedidos()">
+                    Atualizar
+                </button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Produto</th>
+                        <th>Quantidade</th>
+                        <th>Valor Total</th>
+                        <th>Acões</th>
+                    </tr>
+                </thead>
+
+                <tbody id="listaPedidos"></tbody>
+            </table>
+        </section>
+
+<section class="card">
+    <div class="tituloTabela">
+        <h2>Movimentações</h2>
+
+        <button onclick="listarMovimentos()">
+            Atualizar
+        </button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Quantidade</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+
+        <tbody id="listaMovimentos"></tbody>
+    </table>
+</section>
+
+</div>
+
+<script src="script.js"></script>
 
 </body>
 </html>

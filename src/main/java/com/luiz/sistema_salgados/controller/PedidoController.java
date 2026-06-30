@@ -25,4 +25,9 @@ public class PedidoController {
     public List<Pedido> listarTodos() {
         return service.listarTodos();
     }
+
+    @PutMapping("/{id}/estornar")
+    public void estornar(@PathVariable Long id) {
+        service.estornar(id);
+    }
 }

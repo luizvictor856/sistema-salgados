@@ -1,0 +1,247 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    display:flex;
+    background:#0b111d;
+    color:white;
+}
+
+/* ===== MENU LATERAL ===== */
+
+.sidebar{
+    width:250px;
+    height:100vh;
+    background:#050b14;
+    padding:30px;
+    position:fixed;
+}
+
+.sidebar h1{
+
+    font-size:38px;
+
+    line-height:45px;
+
+    margin-bottom:60px;
+
+}
+
+.sidebar span{
+    color:#ffc107;
+}
+
+.sidebar ul{
+    list-style:none;
+}
+
+.sidebar li{
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:10px;
+    cursor:pointer;
+    transition:.3s;
+    font-size:18px;
+}
+
+.sidebar li:hover{
+    background:#102544;
+    color:#ffc107;
+}
+
+/* ===== CONTEÚDO ===== */
+
+.conteudo{
+    margin-left:250px;
+    width:calc(100% - 250px);
+    padding:35px;
+}
+
+header{
+    margin-bottom:30px;
+}
+
+header h2{
+    font-size:34px;
+}
+
+/* ===== CARDS ===== */
+
+.card{
+
+    background:#162338;
+
+    border-radius:18px;
+
+    padding:30px;
+
+    margin-bottom:35px;
+
+    box-shadow:
+
+    0 8px 25px rgba(0,0,0,.35);
+
+}
+
+.card h2{
+    margin-bottom:20px;
+    color:#ffc107;
+}
+
+/* ===== FORMULÁRIO ===== */
+
+.formulario{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+}
+
+.formulario input{
+
+    flex:1;
+
+    padding:18px;
+
+    border:2px solid transparent;
+
+    border-radius:12px;
+
+    background:#22314a;
+
+    color:white;
+
+    font-size:16px;
+
+    transition:.3s;
+
+}
+
+.formulario input:focus{
+
+    outline:none;
+
+    border-color:#ffc107;
+
+}
+
+.formulario input::placeholder{
+    color:#c9c9c9;
+}
+
+button{
+
+    background:#ffc107;
+
+    color:#111;
+
+    border:none;
+
+    border-radius:10px;
+
+    padding:15px 28px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    box-shadow:0 5px 15px rgba(255,193,7,.35);
+
+}
+
+button:hover{
+
+    background:#ffd84d;
+
+    transform:translateY(-3px);
+
+}
+
+button:hover{
+
+    background:#ffdb58;
+
+    transform:scale(1.05);
+
+}
+
+/* ===== TABELA ===== */
+
+.tituloTabela{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:20px;
+
+}
+
+table{
+
+    width:100%;
+
+    border-collapse:collapse;
+
+}
+
+th{
+
+    text-align:left;
+
+    color:#ffc107;
+
+    padding:15px;
+
+    border-bottom:1px solid #2b3c58;
+
+}
+
+td{
+
+    padding:15px;
+
+    border-bottom:1px solid #2b3c58;
+
+}
+
+tr:hover{
+
+    background:#19273d;
+
+}
+
+/* ===== TOPO ===== */
+
+.topo{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.usuario{
+
+    background:#19273d;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    color:#ffc107;
+
+    font-weight:bold;
+
+}
