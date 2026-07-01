@@ -2,11 +2,11 @@ package com.luiz.sistema_salgados.service;
 
 import com.luiz.sistema_salgados.model.Pedido;
 import com.luiz.sistema_salgados.model.Produto;
+import com.luiz.sistema_salgados.patterns.strategy.CalculoPrecoStrategy;
+import com.luiz.sistema_salgados.patterns.strategy.PrecoNormalStrategy;
+import com.luiz.sistema_salgados.patterns.strategy.PrecoPromocaoStrategy;
 import com.luiz.sistema_salgados.repository.PedidoRepository;
 import com.luiz.sistema_salgados.repository.ProdutoRepository;
-import com.luiz.sistema_salgados.strategy.CalculoPrecoStrategy;
-import com.luiz.sistema_salgados.strategy.PrecoNormalStrategy;
-import com.luiz.sistema_salgados.strategy.PrecoPromocaoStrategy;
 
 import org.springframework.stereotype.Service;
 import com.luiz.sistema_salgados.model.Movimento;

@@ -1,4 +1,4 @@
-package com.luiz.sistema_salgados.strategy;
+package com.luiz.sistema_salgados.patterns.strategy;
 
 import com.luiz.sistema_salgados.model.Produto;
 
