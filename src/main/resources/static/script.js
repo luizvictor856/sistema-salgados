@@ -293,6 +293,9 @@ async function entradaEstoque() {
 }
 
 // ===== CÁRDAPIO =====
+
+// Busca os produtos no back-end (GET /produtos)
+// para montar o cardápio na tela.
 async function carregarCardapio() {
     const resposta = await fetch('/produtos');
     const produtos = await resposta.json();
@@ -300,6 +303,7 @@ async function carregarCardapio() {
     const cardapio = document.getElementById('cardapio');
     cardapio.innerHTML = '';
 
+    // Cria um card para cada produto retornado pelo banco.
     produtos.forEach(produto => {
         cardapio.innerHTML += `
             <div class="produto-card">
@@ -340,8 +344,10 @@ async function carregarCardapio() {
                 Cheddar (+R$3)
             </label>
 
+            // Quando o usuário clica em Fazer Pedido,
+            // inicia o fluxo da compra.
         </div>
-
+         
             <button onclick="fazerPedidoCard(${produto.id})">
                 Fazer Pedido
             </button>
@@ -351,24 +357,33 @@ async function carregarCardapio() {
     });
 }
 
+// Monta o objeto Pedido que será enviado ao back-end.
 async function fazerPedidoCard(produtoId) {
     const pedido = {
+        // Produto escolhido pelo cliente.
         produto: {
             id: produtoId
         },
         quantidade: parseInt(document.getElementById(`quantidade-${produtoId}`).value),
+         // Adicionais selecionados (Decorator).
         catupiry: document.getElementById(`catupiry-${produtoId}`).checked,
         cheddar: document.getElementById(`cheddar-${produtoId}`).checked
     };
 
+    
+    // Envia o pedido para o PedidoController
+    // utilizando uma requisição POST.
     await fetch('/pedidos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(pedido)
     });
 
-    alert('Pedido realizado com sucesso!');
+    //"Neste momento termina o Front-end. O pedido é convertido em JSON e enviado para a rota /pedidos."
 
+    alert('Pedido realizado com sucesso!');
+    //server pr atualizar os dados após a compra
+    // Depois que o back end responder, a interface é atualizada
     listarPedidos();
     listarMovimentos();
     listarProdutos();

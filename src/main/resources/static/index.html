@@ -1,181 +1,192 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+    <!-- Configura caracteres e responsividade da página -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Salgados</title>
+
+    <!-- Importa o CSS da interface -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <!-- ===== TELA DE LOGIN ===== -->
+<!-- Primeira tela exibida. Só depois do login o sistema principal aparece. -->
 <div id="telaLogin" class="tela-auth ativa">
     <div class="auth-box">
         <h1>🍔 Sistema de <br><span>Salgados</span></h1>
-        <p class="auth-sub">Faça login para continuar</p>
+
+        <!-- Campos usados pela função fazerLogin() no script.js -->
         <input type="email" id="loginEmail" placeholder="E-mail" class="auth-input">
         <input type="password" id="loginSenha" placeholder="Senha" class="auth-input">
+
+        <!-- Chama a função JS que valida email/senha no back-end -->
         <button onclick="fazerLogin()">Entrar</button>
-        <p class="auth-link">Não tem conta? <a onclick="mostrarAuth('telaCadastro')">Cadastre-se</a></p>
+
+        <!-- Alterna para a tela de cadastro -->
+        <p class="auth-link">
+            Não tem conta?
+            <a onclick="mostrarAuth('telaCadastro')">Cadastre-se</a>
+        </p>
     </div>
 </div>
 
 <!-- ===== TELA DE CADASTRO ===== -->
+<!-- Aqui o cliente cria conta antes de poder acessar o sistema. -->
 <div id="telaCadastro" class="tela-auth">
     <div class="auth-box">
         <h1>🍔 Criar Conta</h1>
-        <p class="auth-sub">Preencha seus dados</p>
+
+        <!-- Dados enviados para POST /clientes -->
         <input type="text" id="nomeCliente" placeholder="Nome completo" class="auth-input">
         <input type="email" id="emailCliente" placeholder="E-mail" class="auth-input">
         <input type="password" id="senhaCliente" placeholder="Senha" class="auth-input">
+
+        <!-- Chama cadastrarCliente(), que envia os dados ao back-end -->
         <button onclick="cadastrarCliente()">Criar Conta</button>
-        <p class="auth-link">Já tem conta? <a onclick="mostrarAuth('telaLogin')">Entrar</a></p>
+
+        <!-- Volta para login -->
+        <p class="auth-link">
+            Já tem conta?
+            <a onclick="mostrarAuth('telaLogin')">Entrar</a>
+        </p>
     </div>
 </div>
 
 <!-- ===== SISTEMA PRINCIPAL ===== -->
+<!-- Só aparece após login válido. -->
 <div id="telaApp">
 
+    <!-- Menu lateral para navegar entre as seções -->
     <div class="sidebar">
-        <h1>
-            🍔 Sistema de
-            <br>
-            <span>Salgados</span>
-        </h1>
+        <h1>🍔 Sistema de <br><span>Salgados</span></h1>
 
         <ul>
+            <!-- Abre a tela de compra/cardápio -->
             <li onclick="irPara('pedidos')">🛒 Pedidos</li>
+
+            <!-- Mostra movimentações: SAÍDA e ESTORNO -->
             <li onclick="irPara('extrato')">📋 Extrato</li>
+
+            <!-- Mostra clientes cadastrados -->
             <li onclick="irPara('relatorios')">📊 Relatórios</li>
+
+            <!-- Volta para a tela de login -->
             <li onclick="sair()" style="margin-top:auto; color:#aaa;">↩ Sair</li>
         </ul>
     </div>
 
     <div class="conteudo">
 
+        <!-- Cabeçalho do sistema após login -->
         <header>
             <div class="topo">
                 <h2 id="topoTitulo">Dashboard</h2>
-                <div class="usuario">👤 <span id="nomeUsuario">Administrador</span></div>
+
+                <!-- Nome do usuário logado é preenchido pelo fazerLogin() -->
+                <div class="usuario">
+                    👤 <span id="nomeUsuario">Administrador</span>
+                </div>
             </div>
         </header>
 
-        <!-- DASHBOARD -->
-        <div id="secDashboard" class="secao">
-            <section class="card">
-                <div class="tituloTabela">
-                    <h2>Últimos Pedidos</h2>
-                    <button onclick="listarPedidos()">Atualizar</button>
-                </div>
-                <table>
-                    <thead>
-                        <tr><th>ID</th><th>Produto</th><th>Quantidade</th><th>Valor Total</th><th>Ações</th></tr>
-                    </thead>
-                    <tbody id="listaPedidosDash"></tbody>
-                </table>
-            </section>
-
-            <section class="card">
-                <div class="tituloTabela">
-                    <h2>Produtos Cadastrados</h2>
-                    <button onclick="listarProdutos()">Atualizar</button>
-                </div>
-                <table>
-                    <thead>
-                        <tr><th>ID</th><th>Sabor</th><th>Preço</th><th>Estoque</th></tr>
-                    </thead>
-                    <tbody id="listaProdutosDash"></tbody>
-                </table>
-            </section>
-        </div>
-
-        <!-- PRODUTOS -->
-        <div id="secProdutos" class="secao">
-            <section class="card">
-                <h2>Cadastrar Produto</h2>
-                <div class="formulario">
-                    <input type="text" id="sabor" placeholder="Ex.: Coxinha">
-                    <input type="number" id="preco" placeholder="Preço">
-                    <input type="number" id="estoque" placeholder="Estoque">
-                    <button onclick="cadastrarProduto()">Salvar Produto</button>
-                </div>
-            </section>
-
-            <section class="card">
-                <h2>Entrada de Estoque</h2>
-                <div class="formulario">
-                    <input type="number" id="produtoEntradaId" placeholder="ID do Produto">
-                    <input type="number" id="quantidadeEntrada" placeholder="Quantidade">
-                    <button onclick="entradaEstoque()">Adicionar Estoque</button>
-                </div>
-            </section>
-
-            <section class="card">
-                <div class="tituloTabela">
-                    <h2>Produtos Cadastrados</h2>
-                    <button onclick="listarProdutos()">Atualizar</button>
-                </div>
-                <table>
-                    <thead>
-                        <tr><th>ID</th><th>Sabor</th><th>Preço</th><th>Estoque</th></tr>
-                    </thead>
-                    <tbody id="listaProdutos"></tbody>
-                </table>
-            </section>
-        </div>
-
-        <!-- PEDIDOS -->
+        <!-- ===== PEDIDOS: PARTE PRINCIPAL DA COMPRA ===== -->
         <div id="secPedidos" class="secao">
+
+            <!-- CARDÁPIO -->
             <section class="card">
                 <h2>Cardápio</h2>
 
-                    <div id="cardapio" class="cardapio">
-                      <!-- Os produtos serão inseridos pelo JavaScript -->
-                    </div>
+                <!-- 
+                    Esta div começa vazia.
+                    A função carregarCardapio() no script.js busca GET /produtos
+                    e cria os cards automaticamente aqui.
+                -->
+                <div id="cardapio" class="cardapio">
+                    <!-- Os produtos serão inseridos pelo JavaScript -->
+                </div>
+            </section>
 
-             </section>
-
+            <!-- PEDIDOS REALIZADOS -->
             <section class="card">
                 <div class="tituloTabela">
                     <h2>Pedidos Realizados</h2>
+
+                    <!-- Atualiza a lista chamando GET /pedidos -->
                     <button onclick="listarPedidos()">Atualizar</button>
                 </div>
+
                 <table>
                     <thead>
-                        <tr><th>ID</th><th>Produto</th><th>Quantidade</th><th>Valor Total</th><th>Ações</th></tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Valor Total</th>
+                            <th>Ações</th>
+                        </tr>
                     </thead>
+
+                    <!-- 
+                        A função listarPedidos() preenche esta tabela.
+                        Também coloca o botão Estornar em cada pedido ativo.
+                    -->
                     <tbody id="listaPedidos"></tbody>
                 </table>
             </section>
         </div>
 
-        <!-- EXTRATO -->
+        <!-- ===== EXTRATO ===== -->
         <div id="secExtrato" class="secao">
             <section class="card">
                 <div class="tituloTabela">
                     <h2>Extrato de Movimentações</h2>
+
+                    <!-- Atualiza movimentações chamando GET /movimentos -->
                     <button onclick="listarMovimentos()">Atualizar</button>
                 </div>
+
                 <table>
                     <thead>
-                        <tr><th>ID</th><th>Tipo</th><th>Quantidade</th><th>Valor</th></tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Tipo</th>
+                            <th>Quantidade</th>
+                            <th>Valor</th>
+                        </tr>
                     </thead>
+
+                    <!-- 
+                        A função listarMovimentos() exibe:
+                        SAÍDA quando compra
+                        ESTORNO quando desfaz pedido
+                    -->
                     <tbody id="listaMovimentos"></tbody>
                 </table>
             </section>
         </div>
 
-        <!-- RELATÓRIOS -->
+        <!-- ===== RELATÓRIOS ===== -->
         <div id="secRelatorios" class="secao">
             <section class="card">
                 <div class="tituloTabela">
                     <h2>Clientes Cadastrados</h2>
+
+                    <!-- Chama GET /clientes -->
                     <button onclick="listarClientes()">Atualizar</button>
                 </div>
+
                 <table>
                     <thead>
-                        <tr><th>ID</th><th>Nome</th><th>E-mail</th></tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>E-mail</th>
+                        </tr>
                     </thead>
+
+                    <!-- Preenchido pela função listarClientes() -->
                     <tbody id="listaClientes"></tbody>
                 </table>
             </section>
@@ -184,6 +195,7 @@
     </div>
 </div>
 
+<!-- Importa o JavaScript, onde ficam as funções de login, compra e listagens -->
 <script src="script.js"></script>
 </body>
 </html>
