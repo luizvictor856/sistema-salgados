@@ -344,8 +344,7 @@ async function carregarCardapio() {
                 Cheddar (+R$3)
             </label>
 
-            // Quando o usuário clica em Fazer Pedido,
-            // inicia o fluxo da compra.
+           
         </div>
          
             <button onclick="fazerPedidoCard(${produto.id})">
