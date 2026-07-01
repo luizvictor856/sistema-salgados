@@ -1,20 +1,41 @@
 // ===== AUTH =====
 
 function mostrarAuth(id) {
-    document.querySelectorAll('.tela-auth').forEach(t => t.classList.remove('ativa'));
+    document.getElementById('telaApp').classList.remove('ativa');
+
+    document.querySelectorAll('.tela-auth').forEach(t => 
+        t.classList.remove('ativa')
+    );
+
     document.getElementById(id).classList.add('ativa');
 }
 
-function fazerLogin() {
+async function fazerLogin() {
     const email = document.getElementById('loginEmail').value.trim();
     const senha = document.getElementById('loginSenha').value.trim();
-    if (!email || !senha) { alert('Preencha e-mail e senha.'); return; }
 
-    // Adapte aqui se tiver rota real de autenticação no back-end
-    document.getElementById('nomeUsuario').textContent = email.split('@')[0];
+    if (!email || !senha) {
+        alert('Preencha e-mail e senha.');
+        return;
+    }
+
+    const resposta = await fetch('/clientes');
+    const clientes = await resposta.json();
+
+    const clienteEncontrado = clientes.find(cliente =>
+        cliente.email === email && cliente.senha === senha
+    );
+
+    if (!clienteEncontrado) {
+        alert('E-mail ou senha inválidos. Cadastre-se antes de entrar.');
+        return;
+    }
+
+    document.getElementById('nomeUsuario').textContent = clienteEncontrado.nome;
     document.querySelectorAll('.tela-auth').forEach(t => t.classList.remove('ativa'));
-    document.getElementById('telaApp').classList.add('ativo');
-    irPara('dashboard');
+    document.getElementById('telaApp').classList.add('ativa');
+
+    irPara('pedidos');
 }
 
 function sair() {
@@ -44,7 +65,7 @@ function irPara(pagina) {
 
     // Marca o li ativo
     const lis = document.querySelectorAll('.sidebar li');
-    const mapa = ['dashboard','produtos','pedidos','extrato','relatorios'];
+    const mapa = ['pedidos','extrato','relatorios'];
     const idx = mapa.indexOf(pagina);
     if (idx >= 0 && lis[idx]) lis[idx].classList.add('ativo');
 
@@ -137,8 +158,13 @@ async function listarProdutos() {
 
 async function fazerPedido() {
     const pedido = {
-        produto: { id: parseInt(document.getElementById('produtoId').value) },
-        quantidade: parseInt(document.getElementById('quantidadePedido').value)
+    produto: { 
+        id: parseInt(document.getElementById('produtoId').value) 
+    },
+    quantidade: parseInt(document.getElementById('quantidadePedido').value),
+    catupiry: document.getElementById('catupiry').checked,
+    cheddar: document.getElementById('cheddar').checked
+    
     };
 
     await fetch('/pedidos', {
@@ -150,6 +176,8 @@ async function fazerPedido() {
     alert('Pedido realizado com sucesso!');
     document.getElementById('produtoId').value = '';
     document.getElementById('quantidadePedido').value = '';
+    document.getElementById('catupiry').checked = false;
+    document.getElementById('cheddar').checked = false;
     listarPedidos();
     listarMovimentos();
 }
@@ -213,10 +241,13 @@ async function cadastrarCliente() {
         body: JSON.stringify(cliente)
     });
 
-    alert('Conta criada! Faça login para continuar.');
+    alert('Conta criada com sucesso! Faça login para continuar (;');
+
     document.getElementById('nomeCliente').value = '';
     document.getElementById('emailCliente').value = '';
     document.getElementById('senhaCliente').value = '';
+
+
     mostrarAuth('telaLogin');
 }
 
@@ -260,3 +291,105 @@ async function entradaEstoque() {
     listarProdutos();
     listarMovimentos();
 }
+
+// ===== CÁRDAPIO =====
+async function carregarCardapio() {
+    const resposta = await fetch('/produtos');
+    const produtos = await resposta.json();
+
+    const cardapio = document.getElementById('cardapio');
+    cardapio.innerHTML = '';
+
+    produtos.forEach(produto => {
+        cardapio.innerHTML += `
+            <div class="produto-card">
+
+        <img 
+        class="produto-foto"
+        src="${imagemProduto(produto.sabor)}"
+        alt="${produto.sabor}"
+        >
+
+        <h3>${produto.sabor}</h3>
+
+        <span class="preco">
+            R$ ${produto.preco}
+        </span>
+
+        <span class="estoque">
+            Estoque: ${produto.estoque}
+        </span>
+
+        <input
+            type="number"
+            id="quantidade-${produto.id}"
+            placeholder="Quantidade"
+            min="1"
+            value="1"
+        >
+
+        <div class="adicionais">
+
+            <label>
+                <input type="checkbox" id="catupiry-${produto.id}">
+                Catupiry (+R$2)
+            </label>
+
+            <label>
+                <input type="checkbox" id="cheddar-${produto.id}">
+                Cheddar (+R$3)
+            </label>
+
+        </div>
+
+            <button onclick="fazerPedidoCard(${produto.id})">
+                Fazer Pedido
+            </button>
+
+        </div>
+        `;
+    });
+}
+
+async function fazerPedidoCard(produtoId) {
+    const pedido = {
+        produto: {
+            id: produtoId
+        },
+        quantidade: parseInt(document.getElementById(`quantidade-${produtoId}`).value),
+        catupiry: document.getElementById(`catupiry-${produtoId}`).checked,
+        cheddar: document.getElementById(`cheddar-${produtoId}`).checked
+    };
+
+    await fetch('/pedidos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(pedido)
+    });
+
+    alert('Pedido realizado com sucesso!');
+
+    listarPedidos();
+    listarMovimentos();
+    listarProdutos();
+    carregarCardapio();
+}
+
+function imagemProduto(sabor) {
+    const nome = sabor.toLowerCase();
+
+    if (nome.includes('coxinha')) return '/img/coxinha.jpg';
+    if (nome.includes('pastel')) return '/img/pastel.jpg';
+    if (nome.includes('kibe')) return '/img/kibe.jpg';
+    if (nome.includes('esfiha')) return '/img/esfiha.jpg';
+
+}
+
+carregarCardapio();
+
+window.onload = function () {
+    if (!document.getElementById('telaApp').classList.contains('ativa')) {
+        document.querySelectorAll('.tela-auth').forEach(t => t.classList.remove('ativa'));
+        document.getElementById('telaLogin').classList.add('ativa');
+    }
+};

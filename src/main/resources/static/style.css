@@ -93,7 +93,7 @@ body{
     min-height: 100vh;
 }
 
-#telaApp.ativo {
+#telaApp.ativa {
     display: flex;
 }
 
@@ -144,7 +144,7 @@ body{
     color:#ffc107;
 }
 
-.sidebar li.ativo {
+.sidebar li.ativa {
     background: #102544;
     color: #ffc107;
 }
@@ -265,4 +265,148 @@ tr:hover{
     border-radius:10px;
     color:#ffc107;
     font-weight:bold;
+}
+
+.cardapio {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+.produto-card {
+    background: #0b1220;
+    border-radius: 18px;
+    padding: 24px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.produto-img {
+    font-size: 48px;
+    text-align: center;
+}
+
+.produto-card h3 {
+    color: #ffc400;
+    font-size: 24px;
+    margin: 0;
+}
+
+.produto-card p {
+    margin: 0;
+}
+
+.produto-card input[type="number"] {
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background: #243650;
+    color: white;
+}
+
+.produto-card label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.produto-card button {
+    margin-top: 10px;
+}
+
+#cardapio {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)) !important;
+    gap: 24px !important;
+}
+
+.produto-card {
+    background: #0b1220 !important;
+    border-radius: 18px !important;
+    padding: 24px !important;
+    min-height: 360px;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+}
+
+.produto-card input[type="number"] {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.produto-card .adicionais {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.produto-card button {
+    width: 100%;
+    margin-top: auto;
+}
+
+#secPedidos .cardapio {
+    width: 100%;
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(220px, 1fr)) !important;
+    gap: 24px !important;
+    align-items: stretch;
+}
+
+#secPedidos .produto-card {
+    background: #0b1220 !important;
+    border-radius: 18px !important;
+    padding: 22px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    max-width: 260px;
+}
+
+#secPedidos .produto-card input[type="number"] {
+    width: 100% !important;
+    padding: 12px !important;
+    border-radius: 10px !important;
+    border: none !important;
+    background: #243650 !important;
+    color: white !important;
+}
+
+#secPedidos .produto-card .adicionais {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+}
+
+#secPedidos .produto-card button {
+    width: 100% !important;
+}
+
+.produto-foto {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 14px;
+    background: #243650;
+}
+
+#secPedidos .produto-card .adicionais label {
+    background: #19273d;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#secPedidos .produto-card .adicionais label:hover {
+    background: #243650;
+}
+
+#secPedidos .produto-card .preco {
+    color: #ffc400;
+    font-size: 22px;
+    font-weight: bold;
 }

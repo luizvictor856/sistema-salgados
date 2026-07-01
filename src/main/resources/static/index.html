@@ -23,7 +23,7 @@
 <!-- ===== TELA DE CADASTRO ===== -->
 <div id="telaCadastro" class="tela-auth">
     <div class="auth-box">
-        <h1>🍔 Criar <br><span>Conta</span></h1>
+        <h1>🍔 Criar Conta</h1>
         <p class="auth-sub">Preencha seus dados</p>
         <input type="text" id="nomeCliente" placeholder="Nome completo" class="auth-input">
         <input type="email" id="emailCliente" placeholder="E-mail" class="auth-input">
@@ -44,8 +44,6 @@
         </h1>
 
         <ul>
-            <li onclick="irPara('dashboard')">🏠 Dashboard</li>
-            <li onclick="irPara('produtos')">📦 Produtos</li>
             <li onclick="irPara('pedidos')">🛒 Pedidos</li>
             <li onclick="irPara('extrato')">📋 Extrato</li>
             <li onclick="irPara('relatorios')">📊 Relatórios</li>
@@ -63,7 +61,7 @@
         </header>
 
         <!-- DASHBOARD -->
-        <div id="secDashboard" class="secao ativa">
+        <div id="secDashboard" class="secao">
             <section class="card">
                 <div class="tituloTabela">
                     <h2>Últimos Pedidos</h2>
@@ -129,13 +127,13 @@
         <!-- PEDIDOS -->
         <div id="secPedidos" class="secao">
             <section class="card">
-                <h2>Fazer Pedido</h2>
-                <div class="formulario">
-                    <input type="number" id="produtoId" placeholder="ID do Produto">
-                    <input type="number" id="quantidadePedido" placeholder="Quantidade">
-                    <button onclick="fazerPedido()">Fazer Pedido</button>
-                </div>
-            </section>
+                <h2>Cardápio</h2>
+
+                    <div id="cardapio" class="cardapio">
+                      <!-- Os produtos serão inseridos pelo JavaScript -->
+                    </div>
+
+             </section>
 
             <section class="card">
                 <div class="tituloTabela">

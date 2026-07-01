@@ -70,8 +70,13 @@ public class PedidoService {
         strategy.calcular(produto, pedido.getQuantidade())
         );
 
-        itemPedido = new CatupiryDecorator(itemPedido);
-        itemPedido = new CheddarDecorator(itemPedido);
+            if (Boolean.TRUE.equals(pedido.getCatupiry())) {
+                itemPedido = new CatupiryDecorator(itemPedido);
+        }
+
+            if (Boolean.TRUE.equals(pedido.getCheddar())) {
+                itemPedido = new CheddarDecorator(itemPedido);
+        }
 
         pedido.setValorTotal(itemPedido.getPreco());
 

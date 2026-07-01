@@ -21,6 +21,9 @@ public class Pedido {
 
     private Boolean ativo = true;
 
+    private Boolean catupiry = false;
+    private Boolean cheddar = false;
+
     public Pedido() {
     }
 
@@ -90,4 +93,22 @@ public class Pedido {
     public void setAtivo(boolean ativo) {
      this.ativo = ativo;
     }
+
+    public Boolean getCatupiry() {
+    return catupiry;
+}
+
+public void setCatupiry(Boolean catupiry) {
+    this.catupiry = catupiry;
+}
+
+public Boolean getCheddar() {
+    return cheddar;
+}
+
+public void setCheddar(Boolean cheddar) {
+    this.cheddar = cheddar;
+}
+
+    
 }               
