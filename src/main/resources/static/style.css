@@ -11,24 +11,111 @@ body{
     color:white;
 }
 
-/* ===== MENU LATERAL ===== */
+/* ===== TELAS DE AUTH ===== */
+.tela-auth {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: #0b111d;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
 
+.tela-auth.ativa {
+    display: flex;
+}
+
+.auth-box {
+    background: #162338;
+    border-radius: 18px;
+    padding: 48px 40px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.35);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.auth-box h1 {
+    font-size: 32px;
+    line-height: 40px;
+    margin-bottom: 4px;
+}
+
+.auth-box h1 span {
+    color: #ffc107;
+}
+
+.auth-sub {
+    color: #aaa;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.auth-input {
+    padding: 16px;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: #22314a;
+    color: white;
+    font-size: 15px;
+    transition: .3s;
+    width: 100%;
+}
+
+.auth-input:focus {
+    outline: none;
+    border-color: #ffc107;
+}
+
+.auth-input::placeholder {
+    color: #c9c9c9;
+}
+
+.auth-link {
+    text-align: center;
+    font-size: 13px;
+    color: #aaa;
+}
+
+.auth-link a {
+    color: #ffc107;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* ===== APP ===== */
+#telaApp {
+    display: none;
+    width: 100%;
+    min-height: 100vh;
+}
+
+#telaApp.ativo {
+    display: flex;
+}
+
+/* ===== SEÇÕES ===== */
+.secao { display: none; }
+.secao.ativa { display: block; }
+
+/* ===== MENU LATERAL ===== */
 .sidebar{
     width:250px;
     height:100vh;
     background:#050b14;
     padding:30px;
     position:fixed;
+    display: flex;
+    flex-direction: column;
 }
 
 .sidebar h1{
-
     font-size:38px;
-
     line-height:45px;
-
     margin-bottom:60px;
-
 }
 
 .sidebar span{
@@ -37,6 +124,10 @@ body{
 
 .sidebar ul{
     list-style:none;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
 }
 
 .sidebar li{
@@ -53,8 +144,12 @@ body{
     color:#ffc107;
 }
 
-/* ===== CONTEÚDO ===== */
+.sidebar li.ativo {
+    background: #102544;
+    color: #ffc107;
+}
 
+/* ===== CONTEÚDO ===== */
 .conteudo{
     margin-left:250px;
     width:calc(100% - 250px);
@@ -70,21 +165,12 @@ header h2{
 }
 
 /* ===== CARDS ===== */
-
 .card{
-
     background:#162338;
-
     border-radius:18px;
-
     padding:30px;
-
     margin-bottom:35px;
-
-    box-shadow:
-
-    0 8px 25px rgba(0,0,0,.35);
-
+    box-shadow: 0 8px 25px rgba(0,0,0,.35);
 }
 
 .card h2{
@@ -93,7 +179,6 @@ header h2{
 }
 
 /* ===== FORMULÁRIO ===== */
-
 .formulario{
     display:flex;
     gap:15px;
@@ -101,31 +186,19 @@ header h2{
 }
 
 .formulario input{
-
     flex:1;
-
     padding:18px;
-
     border:2px solid transparent;
-
     border-radius:12px;
-
     background:#22314a;
-
     color:white;
-
     font-size:16px;
-
     transition:.3s;
-
 }
 
 .formulario input:focus{
-
     outline:none;
-
     border-color:#ffc107;
-
 }
 
 .formulario input::placeholder{
@@ -133,115 +206,63 @@ header h2{
 }
 
 button{
-
     background:#ffc107;
-
     color:#111;
-
     border:none;
-
     border-radius:10px;
-
     padding:15px 28px;
-
     font-size:16px;
-
     font-weight:bold;
-
     cursor:pointer;
-
     transition:.3s;
-
     box-shadow:0 5px 15px rgba(255,193,7,.35);
-
 }
 
 button:hover{
-
-    background:#ffd84d;
-
-    transform:translateY(-3px);
-
-}
-
-button:hover{
-
     background:#ffdb58;
-
     transform:scale(1.05);
-
 }
 
 /* ===== TABELA ===== */
-
 .tituloTabela{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     margin-bottom:20px;
-
 }
 
 table{
-
     width:100%;
-
     border-collapse:collapse;
-
 }
 
 th{
-
     text-align:left;
-
     color:#ffc107;
-
     padding:15px;
-
     border-bottom:1px solid #2b3c58;
-
 }
 
 td{
-
     padding:15px;
-
     border-bottom:1px solid #2b3c58;
-
 }
 
 tr:hover{
-
     background:#19273d;
-
 }
 
 /* ===== TOPO ===== */
-
 .topo{
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
 }
 
 .usuario{
-
     background:#19273d;
-
     padding:12px 20px;
-
     border-radius:10px;
-
     color:#ffc107;
-
     font-weight:bold;
-
 }

@@ -12,7 +12,13 @@ import org.springframework.stereotype.Service;
 import com.luiz.sistema_salgados.model.Movimento;
 import com.luiz.sistema_salgados.repository.MovimentoRepository;
 import com.luiz.sistema_salgados.patterns.observer.PedidoObserver;
+import com.luiz.sistema_salgados.patterns.command.EstornarPedidoCommand;
+import com.luiz.sistema_salgados.patterns.command.PedidoCommand;
 import com.luiz.sistema_salgados.patterns.observer.HistoricoObserver;
+import com.luiz.sistema_salgados.patterns.decorator.ItemPedido;
+import com.luiz.sistema_salgados.patterns.decorator.ProdutoBase;
+import com.luiz.sistema_salgados.patterns.decorator.CatupiryDecorator;
+import com.luiz.sistema_salgados.patterns.decorator.CheddarDecorator;
 import java.util.ArrayList;
 
 
@@ -59,9 +65,17 @@ public class PedidoService {
             strategy = new PrecoNormalStrategy();
         }        
         
-        pedido.setValorTotal(
-            strategy.calcular(produto, pedido.getQuantidade())
+        ItemPedido itemPedido = new ProdutoBase(
+        produto.getSabor(),
+        strategy.calcular(produto, pedido.getQuantidade())
         );
+
+        itemPedido = new CatupiryDecorator(itemPedido);
+        itemPedido = new CheddarDecorator(itemPedido);
+
+        pedido.setValorTotal(itemPedido.getPreco());
+
+        System.out.println("Decorator aplicado: " + itemPedido.getDescricao());
 
         Movimento movimento = new Movimento(
         "SAIDA",
@@ -83,32 +97,36 @@ public class PedidoService {
     }
     
     public void estornar(Long idPedido) {
-
-    Pedido pedido = pedidoRepository.findById(idPedido)
-            .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
-
-    if (!pedido.isAtivo()) {
-        throw new RuntimeException("Este pedido já foi estornado.");
+    PedidoCommand command = new EstornarPedidoCommand(this, idPedido);
+    command.executar();
     }
 
-    Produto produto = pedido.getProduto();
+    public void estornarInterno(Long idPedido) {
 
-    produto.setEstoque(
+     Pedido pedido = pedidoRepository.findById(idPedido)
+            .orElseThrow(() -> new RuntimeException("Pedido não encontrado"));
+
+        if (!pedido.isAtivo()) {
+        throw new RuntimeException("Este pedido já foi estornado.");
+        }
+
+        Produto produto = pedido.getProduto();
+
+        produto.setEstoque(
             produto.getEstoque() + pedido.getQuantidade()
-    );
+         );
 
-    pedido.setAtivo(false);
+        pedido.setAtivo(false);
 
-    Movimento movimento = new Movimento(
-        "ESTORNO",
-        pedido.getQuantidade(),
-        pedido.getValorTotal()
-    );
+        Movimento movimento = new Movimento(
+            "ESTORNO",
+            pedido.getQuantidade(),
+            pedido.getValorTotal()
+        );
 
         movimentoRepository.save(movimento);
         produtoRepository.save(produto);
         pedidoRepository.save(pedido);
-
     }
 
     public List<Pedido> listarTodos() {

@@ -1,14 +1,40 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Salgados</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
+
+<!-- ===== TELA DE LOGIN ===== -->
+<div id="telaLogin" class="tela-auth ativa">
+    <div class="auth-box">
+        <h1>🍔 Sistema de <br><span>Salgados</span></h1>
+        <p class="auth-sub">Faça login para continuar</p>
+        <input type="email" id="loginEmail" placeholder="E-mail" class="auth-input">
+        <input type="password" id="loginSenha" placeholder="Senha" class="auth-input">
+        <button onclick="fazerLogin()">Entrar</button>
+        <p class="auth-link">Não tem conta? <a onclick="mostrarAuth('telaCadastro')">Cadastre-se</a></p>
+    </div>
+</div>
+
+<!-- ===== TELA DE CADASTRO ===== -->
+<div id="telaCadastro" class="tela-auth">
+    <div class="auth-box">
+        <h1>🍔 Criar <br><span>Conta</span></h1>
+        <p class="auth-sub">Preencha seus dados</p>
+        <input type="text" id="nomeCliente" placeholder="Nome completo" class="auth-input">
+        <input type="email" id="emailCliente" placeholder="E-mail" class="auth-input">
+        <input type="password" id="senhaCliente" placeholder="Senha" class="auth-input">
+        <button onclick="cadastrarCliente()">Criar Conta</button>
+        <p class="auth-link">Já tem conta? <a onclick="mostrarAuth('telaLogin')">Entrar</a></p>
+    </div>
+</div>
+
+<!-- ===== SISTEMA PRINCIPAL ===== -->
+<div id="telaApp">
 
     <div class="sidebar">
         <h1>
@@ -18,11 +44,12 @@
         </h1>
 
         <ul>
-            <li>🏠 Dashboard</li>
-            <li>📦 Produtos</li>
-            <li>🛒 Pedidos</li>
-            <li>🔄 Movimentações</li>
-            <li>📊 Relatórios</li>
+            <li onclick="irPara('dashboard')">🏠 Dashboard</li>
+            <li onclick="irPara('produtos')">📦 Produtos</li>
+            <li onclick="irPara('pedidos')">🛒 Pedidos</li>
+            <li onclick="irPara('extrato')">📋 Extrato</li>
+            <li onclick="irPara('relatorios')">📊 Relatórios</li>
+            <li onclick="sair()" style="margin-top:auto; color:#aaa;">↩ Sair</li>
         </ul>
     </div>
 
@@ -30,168 +57,135 @@
 
         <header>
             <div class="topo">
-                <h2>Sistema de Salgados</h2>
-
-                <div class="usuario">
-                    👤 Administrador
-                </div>
+                <h2 id="topoTitulo">Dashboard</h2>
+                <div class="usuario">👤 <span id="nomeUsuario">Administrador</span></div>
             </div>
         </header>
 
-        <section class="card">
-            <h2>Cadastrar Produto</h2>
+        <!-- DASHBOARD -->
+        <div id="secDashboard" class="secao ativa">
+            <section class="card">
+                <div class="tituloTabela">
+                    <h2>Últimos Pedidos</h2>
+                    <button onclick="listarPedidos()">Atualizar</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Produto</th><th>Quantidade</th><th>Valor Total</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody id="listaPedidosDash"></tbody>
+                </table>
+            </section>
 
-            <div class="formulario">
-                <input type="text" id="sabor" placeholder="Ex.: Coxinha">
-                <input type="number" id="preco" placeholder="Preço">
-                <input type="number" id="estoque" placeholder="Estoque">
-
-                <button onclick="cadastrarProduto()">
-                    Salvar Produto
-                </button>
-            </div>
-        </section>
-
-        <section class="card">
-            <h2>Cadastrar Cliente</h2>
-
-             <div class="formulario">
-                <input type="text" id="nomeCliente" placeholder="Nome do Cliente">
-                <input type="email" id="emailCliente" placeholder="E-mail">
-                <input type="password" id="senhaCliente" placeholder="Senha">
-
-                <button onclick="cadastrarCliente()">
-                    Salvar Cliente
-                </button>
-            </div>
-        </section>
-
-        <section class="card">
-            <div class="tituloTabela">
-                <h2>Clientes Cadastrados</h2>
-
-                <button onclick="listarClientes()">
-                    Atualizar
-                </button>
-            </div>
-
-            <table>
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>E-mail</th>
-                </tr>
-            </thead>
-
-                <tbody id="listaClientes"></tbody>
-            </table>
-        </section>
-
-        <section class="card">
-            <div class="tituloTabela">
-                <h2>Produtos Cadastrados</h2>
-
-                <button onclick="listarProdutos()">
-                    Atualizar
-                </button>
-            </div>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Sabor</th>
-                        <th>Preço</th>
-                        <th>Estoque</th>
-                    </tr>
-                </thead>
-
-                <tbody id="listaProdutos"></tbody>
-            </table>
-        </section>
-
-        </section>   <!-- Fim de Produtos Cadastrados -->
-
-
-    <section class="card">
-        <h2>Entrada de Estoque</h2>
-
-        <div class="formulario">
-            <input type="number" id="produtoEntradaId" placeholder="ID do Produto">
-            <input type="number" id="quantidadeEntrada" placeholder="Quantidade">
-
-            <button onclick="entradaEstoque()">
-                Adicionar Estoque
-            </button>
+            <section class="card">
+                <div class="tituloTabela">
+                    <h2>Produtos Cadastrados</h2>
+                    <button onclick="listarProdutos()">Atualizar</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Sabor</th><th>Preço</th><th>Estoque</th></tr>
+                    </thead>
+                    <tbody id="listaProdutosDash"></tbody>
+                </table>
+            </section>
         </div>
-    </section>
 
-    <section class="card">   
+        <!-- PRODUTOS -->
+        <div id="secProdutos" class="secao">
+            <section class="card">
+                <h2>Cadastrar Produto</h2>
+                <div class="formulario">
+                    <input type="text" id="sabor" placeholder="Ex.: Coxinha">
+                    <input type="number" id="preco" placeholder="Preço">
+                    <input type="number" id="estoque" placeholder="Estoque">
+                    <button onclick="cadastrarProduto()">Salvar Produto</button>
+                </div>
+            </section>
 
-        <section class="card">
-            <h2>Fazer Pedido</h2>
+            <section class="card">
+                <h2>Entrada de Estoque</h2>
+                <div class="formulario">
+                    <input type="number" id="produtoEntradaId" placeholder="ID do Produto">
+                    <input type="number" id="quantidadeEntrada" placeholder="Quantidade">
+                    <button onclick="entradaEstoque()">Adicionar Estoque</button>
+                </div>
+            </section>
 
-            <div class="formulario">
-                <input type="number" id="produtoId" placeholder="ID do Produto">
-                <input type="number" id="quantidadePedido" placeholder="Quantidade">
+            <section class="card">
+                <div class="tituloTabela">
+                    <h2>Produtos Cadastrados</h2>
+                    <button onclick="listarProdutos()">Atualizar</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Sabor</th><th>Preço</th><th>Estoque</th></tr>
+                    </thead>
+                    <tbody id="listaProdutos"></tbody>
+                </table>
+            </section>
+        </div>
 
-                <button onclick="fazerPedido()">
-                    Fazer Pedido
-                </button>
-            </div>
-        </section>
+        <!-- PEDIDOS -->
+        <div id="secPedidos" class="secao">
+            <section class="card">
+                <h2>Fazer Pedido</h2>
+                <div class="formulario">
+                    <input type="number" id="produtoId" placeholder="ID do Produto">
+                    <input type="number" id="quantidadePedido" placeholder="Quantidade">
+                    <button onclick="fazerPedido()">Fazer Pedido</button>
+                </div>
+            </section>
 
-        <section class="card">
-            <div class="tituloTabela">
-                <h2>Pedidos Realizados</h2>
+            <section class="card">
+                <div class="tituloTabela">
+                    <h2>Pedidos Realizados</h2>
+                    <button onclick="listarPedidos()">Atualizar</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Produto</th><th>Quantidade</th><th>Valor Total</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody id="listaPedidos"></tbody>
+                </table>
+            </section>
+        </div>
 
-                <button onclick="listarPedidos()">
-                    Atualizar
-                </button>
-            </div>
+        <!-- EXTRATO -->
+        <div id="secExtrato" class="secao">
+            <section class="card">
+                <div class="tituloTabela">
+                    <h2>Extrato de Movimentações</h2>
+                    <button onclick="listarMovimentos()">Atualizar</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Tipo</th><th>Quantidade</th><th>Valor</th></tr>
+                    </thead>
+                    <tbody id="listaMovimentos"></tbody>
+                </table>
+            </section>
+        </div>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Valor Total</th>
-                        <th>Acões</th>
-                    </tr>
-                </thead>
+        <!-- RELATÓRIOS -->
+        <div id="secRelatorios" class="secao">
+            <section class="card">
+                <div class="tituloTabela">
+                    <h2>Clientes Cadastrados</h2>
+                    <button onclick="listarClientes()">Atualizar</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr><th>ID</th><th>Nome</th><th>E-mail</th></tr>
+                    </thead>
+                    <tbody id="listaClientes"></tbody>
+                </table>
+            </section>
+        </div>
 
-                <tbody id="listaPedidos"></tbody>
-            </table>
-        </section>
-
-<section class="card">
-    <div class="tituloTabela">
-        <h2>Movimentações</h2>
-
-        <button onclick="listarMovimentos()">
-            Atualizar
-        </button>
     </div>
-
-    <table>
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Tipo</th>
-                <th>Quantidade</th>
-                <th>Valor</th>
-            </tr>
-        </thead>
-
-        <tbody id="listaMovimentos"></tbody>
-    </table>
-</section>
-
 </div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
