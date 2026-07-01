@@ -11,6 +11,9 @@ import com.luiz.sistema_salgados.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 import com.luiz.sistema_salgados.model.Movimento;
 import com.luiz.sistema_salgados.repository.MovimentoRepository;
+import com.luiz.sistema_salgados.patterns.observer.PedidoObserver;
+import com.luiz.sistema_salgados.patterns.observer.HistoricoObserver;
+import java.util.ArrayList;
 
 
 import java.util.List;
@@ -23,11 +26,15 @@ public class PedidoService {
     private final ProdutoRepository produtoRepository;
     private final MovimentoRepository movimentoRepository;
 
+    private final List<PedidoObserver> observers = new ArrayList<>();
+
     public PedidoService(PedidoRepository pedidoRepository,ProdutoRepository produtoRepository,MovimentoRepository movimentoRepository) {
 
     this.pedidoRepository = pedidoRepository;
     this.produtoRepository = produtoRepository;
     this.movimentoRepository = movimentoRepository;
+
+    observers.add(new HistoricoObserver());
 }
 
     public Pedido salvar(Pedido pedido) {
@@ -66,7 +73,13 @@ public class PedidoService {
 
         produtoRepository.save(produto);
 
-        return pedidoRepository.save(pedido);
+        Pedido pedidoSalvo = pedidoRepository.save(pedido);
+
+        for (PedidoObserver observer : observers) {
+            observer.atualizar(pedidoSalvo);
+        }
+
+        return pedidoSalvo;
     }
     
     public void estornar(Long idPedido) {
